@@ -1,0 +1,1 @@
+http://geonode.pakistangis.org:80/geoserver/ows?service=WFS&version=1.0.0&request=GetFeature&typename=geonode%3Apak_admbnda_adm2_wfp_20220909&outputFormat=SHAPE-ZIP&srs=EPSG%3A4326&format_options=charset%3AUTF-8
