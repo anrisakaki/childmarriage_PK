@@ -134,10 +134,22 @@ marriage_sum <- marriagedata_mics %>%
   mutate(share_u18_marr = u18_marr_n/n_married) %>% 
   select(province, division, HH7, everything())
 
-u18_marr_shp <- full_join(pkmap_clean, marriage_sum)
+u18_marr_shp <- full_join(pkmap3, marriage_sum) %>% 
+  mutate(
+    share_u18_marr = ifelse(HH7 == "Chitral Lower" | HH7 == "Chitral Upper", 0.4614631, share_u18_marr),
+    share_u18_marr = ifelse(HH7 == "Kohistan Lower" | HH7 == "Kohistan Upper" | HH7 == "Kolai Palas Kohistan", 0.7219096, share_u18_marr)
+  )
+
+province_labels <- pkmap_1 %>%
+  mutate(centroid = st_centroid(geometry)) %>% 
+  mutate(lon = st_coordinates(centroid)[,1],
+         lat = st_coordinates(centroid)[,2])
 
 ggplot(u18_marr_shp) + 
-  geom_sf(aes(fill = share_u18_marr*100)) +
+  geom_sf(aes(fill = share_u18_marr * 100)) +
+  geom_sf(data = pkmap_1, fill = NA, color = "PURPLE", size = 50000) +
+  geom_text(data = province_labels, aes(x = lon, y = lat, label = NAME_1),
+            color = "black", size = 3) +
   scale_fill_gradient(name = "Share of women aged 20-24 married \nbefore the age of 18 (%)", low = "green", high = "red", na.value = "grey") + 
   theme(axis.text.x = element_blank(),
         axis.text.y = element_blank(),
@@ -146,3 +158,4 @@ ggplot(u18_marr_shp) +
         axis.title.x=element_blank(),
         panel.background = element_blank()) +
   ggtitle("")
+ggsave("childmarriage.png", height = 7, width = 7)
