@@ -26,6 +26,7 @@ uc_pk <- read_sf("SHP/UC-shapefile/Adminbdy Shapefile/Union_Council.shp")
 flood10_shp <- read_sf("SHP/pak_adm4_2010floodaffected_pco_20150826/Pak_adm4_2010FloodAffected_pco_20150826/Pak_adm4_2010FloodAffected_pco_20150826.shp")
 
 dhs_shp <- read_sf("data/geo_pk1991_2017/geo_pk1991_2017.shp")
+dhs_dist_shp <- read_sf("SHP/sdr_subnational_data_2025-06-23/shps/sdr_subnational_data_dhs_2017.shp")
 
 # SUCCESS DATA
 succ <- read_sav("data/data/EL-HH Rooster Data Combined V3.sav")
