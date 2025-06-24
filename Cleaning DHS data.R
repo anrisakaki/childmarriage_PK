@@ -4,7 +4,7 @@ names(dhs_17) <- gsub("[^a-zA-Z0-9_]", "_", names(dhs_17))
 names(dhs_17) <- tolower(names(dhs_17))
 
 dhs17 <- dhs_17 %>% 
-  rename(district = sdist,
+  rename(districtid = sdist,
          hhid = v002,
          ivid = v003,
          monthint = v006,
@@ -12,7 +12,7 @@ dhs17 <- dhs_17 %>%
          birthda = v011,
          birthmo = v009,
          birthyr = v010,
-         region = v024,
+         regionid = v024,
          urban = v025,
          age = v012,
          educattain = v106,
@@ -75,13 +75,17 @@ dhs17 <- dhs_17 %>%
     u16 = ifelse(agemarr < 16, 1, 0),
     u18 = ifelse(agemarr < 18, 1, 0)
   ) %>% 
-  select(region, district, urban, hhid, ivid, monthint, yrint, birthda, birthmo, birthyr, age, yrschool, educattain, marst, u16, u18,
+  select(regionid, districtid, urban, hhid, ivid, monthint, yrint, birthda, birthmo, birthyr, age, yrschool, educattain, marst, u16, u18,
          marr_fbirth, chborn, agemarr, agefbirth, nchild, work, ind, indgen, dm1, dm2, dm3, dm4, dm_index, dv1, dv2, dv3, dv4, dv5, dv_index,
          ipv1, ipv2, ipv3, ipv4, ipv5, ipv6, ipv7, ipv8, ipv9, ipv10, ipv11, ipv12, ipv13, less_viol, severe_viol, sexual_viol,
          husband_age, husband_educ, husband_ind, husband_indgen, hhsize, wealthind, wt, dv_wt)
 
+dhs17$district <- as_factor(dhs17$districtid)
+dhs17$region <- as_factor(dhs17$regionid)
+
 dhs_sum <- dhs17 %>% 
-  group_by(region) %>% 
+  mutate(regionid = ifelse(regionid == 6, 1, regionid)) %>% 
+  group_by(regionid) %>% 
   summarise(
     u16 = weighted.mean(u16, wt, na.rm = T),
     u18 = weighted.mean(u18, wt, na.rm = T),
@@ -96,11 +100,58 @@ dhs_sum <- dhs17 %>%
     sexual_viol = weighted.mean(sexual_viol, dv_wt, na.rm = T)
   )
 
-dhs_shp <- dhs_shp %>% rename(region = DHSCODE)
+dhs_dist_sum <- dhs17 %>% 
+  group_by(region, district) %>% 
+  mutate(district = toupper(as.character(district)),
+         region = toupper(as.character(region)),
+         district = case_when(
+           district == "JAFARABAD" ~ "JAFFARABAD",
+           district == "KACHHI (BOLAN)" ~ "KACHHI",
+           district == "KECH (TURBAT)" ~ "KECH",
+           district == "SHERANI" ~ "SHEERANI",
+           district == "NORTH WAZIRISTAN AGENCY" ~ "N. WAZIRASTAN",
+           district == "SOUTH WAZIRISTAN AGENCY" ~ "S. WAZIRASTAN",
+           district == "D. I. KHAN" ~ "D I KHAN",
+           district == "TOR GHAR" ~ "TORDHER",
+           district == "DERA GHAZI KHAN" ~ "D G KHAN",
+           district == "MUZAFFARGARH" ~ "MUZAFARGARH",
+           district == "TOBA TEK SINGH" ~ "T. T SINGH",
+           district == "KAMBAR SHAHDADKOT" ~ "SHAHDAD KOT",
+           district == "KARACHI MALIR" ~ "MALIR",
+           district == "NAUSHAHRO FIROZE" ~ "NAUSHAHRO FEROZ",
+           district == "RAHIM YAR KHAN" ~ "R Y KHAN",
+           district == "SHAHEED BENAZIRABAD" ~ "S. BENAZIRABAD",
+           district == "SHIKARPUR" ~ "SHIKARPHUR",
+           district == "SUJAWAL" ~ "SUJJAWAL",
+           district == "TANDO ALLAHYAR" ~ "T. AYAR",
+           district == "TANDO MUHAMMAD KHAN" ~ "T. M KHAN",
+           TRUE ~ district),
+         region = case_when(
+           region == "GILGIT BALTISTAN" ~ "GB",
+           region == "ICT" ~ "FEDERAL CAPITAL TERRITORY",
+           region == "KPK" ~ "KHYBER PAKHTUNKHWA",
+           TRUE ~ region
+         )) %>% 
+  summarise(
+    u16 = weighted.mean(u16, wt, na.rm = T),
+    u18 = weighted.mean(u18, wt, na.rm = T),
+    agefbirth = weighted.mean(agefbirth, wt, na.rm = T),
+    agemarr = weighted.mean(agemarr, wt),
+    chborn = weighted.mean(chborn, wt),
+    nchild = weighted.mean(nchild, wt),
+    work = weighted.mean(work, wt, na.rm = T),
+    yrschool = weighted.mean(yrschool, wt),
+    less_viol = weighted.mean(less_viol, dv_wt, na.rm = T),
+    severe_viol = weighted.mean(severe_viol, dv_wt, na.rm = T),
+    sexual_viol = weighted.mean(sexual_viol, dv_wt, na.rm = T)
+  )
 
-dhs_sum_shp <- left_join(dhs_sum, dhs_shp) %>% st_as_sf()
+dhs_shp <- dhs_shp %>%
+  rename(regionid = DHSCODE) 
+dist_pk_shp <- dist_pk %>% rename(region = PROVINCE, district = DISTRICT)
 
-ggplot(data = dhs_sum_shp) +
-  geom_sf(aes(fill = u16)) +
-  scale_fill_viridis_c(name = "Share married under \nthe age of 16", labels = scales::percent) +
-  theme_minimal()
+dhs_sum_shp <- full_join(dhs_sum, dhs_shp) %>%
+  st_as_sf() 
+dhs_dist_sum_shp <- full_join(dhs_dist_sum, dist_pk_shp) %>%
+  st_as_sf() 
+
