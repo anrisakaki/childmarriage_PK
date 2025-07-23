@@ -26,7 +26,8 @@ uc_pk <- read_sf("SHP/UC-shapefile/Adminbdy Shapefile/Union_Council.shp")
 flood10_shp <- read_sf("SHP/pak_adm4_2010floodaffected_pco_20150826/Pak_adm4_2010FloodAffected_pco_20150826/Pak_adm4_2010FloodAffected_pco_20150826.shp")
 
 dhs_shp <- read_sf("data/geo_pk1991_2017/geo_pk1991_2017.shp")
-dhs_dist_shp <- read_sf("SHP/sdr_subnational_data_2025-06-23/shps/sdr_subnational_data_dhs_2017.shp")
+dhs_dist_06_shp <- read_sf("data/PKGE51FL/PKGE51FL.shp")
+dhs_dist_17_shp <- read_sf("data/PKGE71FL/PKGE71FL.shp")
 
 # SUCCESS DATA
 succ <- read_sav("data/data/EL-HH Rooster Data Combined V3.sav")
@@ -45,4 +46,9 @@ sindh_hl <- read_sav("data/MICS/Pakistan Sindh MICS6 Datasets/Pakistan Sindh MIC
 sindh_wm <- read_sav("data/MICS/Pakistan Sindh MICS6 Datasets/Pakistan Sindh MICS6 SPSS Datasets/wm.sav")
 
 # DHS 
-dhs_17 <- read_sav("data/DHS/PDHS 2017-18/PKIR71SV/PKIR71FL.SAV")
+dhs_hh_06 <- read_sav("data/DHS/PDHS 2006-07/PKHR53SV/PKHR53FL.SAV")
+dhs_w_06 <- read_sav("data/DHS/PDHS 2006-07/PKIR53SV/PKIR53FL.SAV")
+dhs_hh_12 <- read_sav("data/DHS/PDHS 2012-13/PKHR61SV/PKHR61FL.SAV")
+dhs_w_12 <- read_sav("data/DHS/PDHS 2012-13/PKIR61SV/PKIR61FL.SAV")
+dhs_hh_17 <- read_sav("data/DHS/PDHS 2017-18/PKHR71SV/PKHR71FL.SAV")
+dhs_w_17 <- read_sav("data/DHS/PDHS 2017-18/PKIR71SV/PKIR71FL.SAV")
