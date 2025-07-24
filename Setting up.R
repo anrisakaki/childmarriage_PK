@@ -25,10 +25,6 @@ uc_pk <- read_sf("SHP/UC-shapefile/Adminbdy Shapefile/Union_Council.shp")
 
 flood10_shp <- read_sf("SHP/pak_adm4_2010floodaffected_pco_20150826/Pak_adm4_2010FloodAffected_pco_20150826/Pak_adm4_2010FloodAffected_pco_20150826.shp")
 
-dhs_shp <- read_sf("data/geo_pk1991_2017/geo_pk1991_2017.shp")
-dhs_dist_06_shp <- read_sf("data/PKGE51FL/PKGE51FL.shp")
-dhs_dist_17_shp <- read_sf("data/PKGE71FL/PKGE71FL.shp")
-
 # SUCCESS DATA
 succ <- read_sav("data/data/EL-HH Rooster Data Combined V3.sav")
 
@@ -52,3 +48,8 @@ dhs_hh_12 <- read_sav("data/DHS/PDHS 2012-13/PKHR61SV/PKHR61FL.SAV")
 dhs_w_12 <- read_sav("data/DHS/PDHS 2012-13/PKIR61SV/PKIR61FL.SAV")
 dhs_hh_17 <- read_sav("data/DHS/PDHS 2017-18/PKHR71SV/PKHR71FL.SAV")
 dhs_w_17 <- read_sav("data/DHS/PDHS 2017-18/PKIR71SV/PKIR71FL.SAV")
+
+dhs_dist_06_shp <- read_sf("data/PKGE51FL/PKGE51FL.shp")
+dhs_dist_17_shp <- read_sf("data/PKGE71FL/PKGE71FL.shp")
+
+dhs_dist_12_codes <- read_csv("data/DHS/Pakistan_2012_DHS_district_codes.csv")
