@@ -1,8 +1,33 @@
 # DHS 
+ggplot(data = dhs_dist_sum_shp) +
+  geom_sf(aes(fill = (u16_12 - u16_06) * 100)) +
+  scale_fill_gradient2(
+    low = "blue",     
+    mid = "lightyellow",     
+    high = "red",     
+    midpoint = 0,     
+    name = "Change in share first married under 16 \n between 2006 and 2012 (p.p.)"
+  ) +
+  theme_minimal() +
+  theme(
+    panel.grid.major = element_blank(),
+    axis.text = element_blank(),
+    axis.ticks = element_blank(),
+    axis.title = element_blank(),
+    legend.title = element_text(size = 20),
+    legend.text = element_text(size = 15)
+  )
+ggsave("Figures/u16_change_0612.jpeg", width = 14, height = 14)
 
 ggplot(data = dhs_dist_sum_shp) +
-  geom_sf(aes(fill = u16 * 100)) +
-  scale_fill_viridis_c(direction = -1, name = "Share first married under 16 (%)") +
+  geom_sf(aes(fill = (u18_12 - u18_06) * 100)) +
+  scale_fill_gradient2(
+    low = "blue",     
+    mid = "lightyellow",     
+    high = "red",     
+    midpoint = 0,     
+    name = "Change in share first married under 18 \n between 2006 and 2012 (p.p.)"
+  ) +
   theme_minimal() +
   theme(
     panel.grid.major = element_blank(),
@@ -12,25 +37,17 @@ ggplot(data = dhs_dist_sum_shp) +
     legend.title = element_text(size = 20),
     legend.text = element_text(size = 15)
   )
-ggsave("Figures/u16.jpeg", width = 14, height = 14)
-
-ggplot(data = dhs_dist_2024_sum_shp) +
-  geom_sf(aes(fill = u16 * 100)) +
-  scale_fill_viridis_c(direction = -1, name = "Share of women aged 20-24 \nfirst married under 16 (%)") +
-  theme_minimal() +
-  theme(
-    panel.grid.major = element_blank(),
-    axis.text = element_blank(),
-    axis.ticks = element_blank(),
-    axis.title = element_blank(),
-    legend.title = element_text(size = 20),
-    legend.text = element_text(size = 15)
-  )
-ggsave("Figures/u16_20204.jpeg", width = 14, height = 14)
+ggsave("Figures/u18_change_0612.jpeg", width = 14, height = 14)
 
 ggplot(data = dhs_dist_sum_shp) +
-  geom_sf(aes(fill = u18*100)) +
-  scale_fill_viridis_c(direction = -1, name = "Share first married under 18 (%)") +
+  geom_sf(aes(fill = agemarr_change)) +
+  scale_fill_gradient2(
+    low = "blue",     
+    mid = "white",     
+    high = "red",     
+    midpoint = 0,     
+    name = "Change in avg. age of first marriage \n between 2006 and 2017"
+  ) +
   theme_minimal() +
   theme(
     panel.grid.major = element_blank(),
@@ -40,130 +57,4 @@ ggplot(data = dhs_dist_sum_shp) +
     legend.title = element_text(size = 20),
     legend.text = element_text(size = 15)
   )
-ggsave("Figures/u18.jpeg", width = 14, height = 14)
-
-ggplot(data = dhs_dist_2024_sum_shp) +
-  geom_sf(aes(fill = u18*100)) +
-  scale_fill_viridis_c(direction = -1, name = "Share of women aged 20-24 \nfirst married under 18 (%)") +
-  theme_minimal() +
-  theme(
-    panel.grid.major = element_blank(),
-    axis.text = element_blank(),
-    axis.ticks = element_blank(),
-    axis.title = element_blank(),
-    legend.title = element_text(size = 20),
-    legend.text = element_text(size = 15)
-  )
-ggsave("Figures/u18_2024.jpeg", width = 14, height = 14)
-
-ggplot(data = dhs_dist_sum_shp) +
-  geom_sf(aes(fill = agemarr)) +
-  scale_fill_viridis_c(direction = -1, name = "Avg. age of first marriage") +
-  theme_minimal() +
-  theme(
-    panel.grid.major = element_blank(),
-    axis.text = element_blank(),
-    axis.ticks = element_blank(),
-    axis.title = element_blank(),
-    legend.title = element_text(size = 20),
-    legend.text = element_text(size = 15)
-  )
-ggsave("Figures/agemarr.jpeg", width = 14, height = 14)
-
-ggplot(data = dhs_dist_2024_sum_shp) +
-  geom_sf(aes(fill = agemarr)) +
-  scale_fill_viridis_c(direction = -1, name = "Avg. age of first marriage \namong women aged 20-24") +
-  theme_minimal() +
-  theme(
-    panel.grid.major = element_blank(),
-    axis.text = element_blank(),
-    axis.ticks = element_blank(),
-    axis.title = element_blank(),
-    legend.title = element_text(size = 20),
-    legend.text = element_text(size = 15)
-  )
-ggsave("Figures/agemarr_2024.jpeg", width = 14, height = 14)
-
-ggplot(data = dhs_dist_sum_shp) +
-  geom_sf(aes(fill = agefbirth)) +
-  scale_fill_viridis_c(direction = -1, name = "Avg. age of first birth") +
-  theme_minimal() +
-  theme(
-    panel.grid.major = element_blank(),
-    axis.text = element_blank(),
-    axis.ticks = element_blank(),
-    axis.title = element_blank(),
-    legend.title = element_text(size = 20),
-    legend.text = element_text(size = 15)
-  )
-ggsave("Figures/agefbirth.jpeg", width = 14, height = 14)
-
-ggplot(data = dhs_dist_2024_sum_shp) +
-  geom_sf(aes(fill = agefbirth)) +
-  scale_fill_viridis_c(direction = -1, name = "Avg. age of first birth \namong women aged 20-24") +
-  theme_minimal() +
-  theme(
-    panel.grid.major = element_blank(),
-    axis.text = element_blank(),
-    axis.ticks = element_blank(),
-    axis.title = element_blank(),
-    legend.title = element_text(size = 20),
-    legend.text = element_text(size = 15)
-  )
-ggsave("Figures/agefbirth_2024.jpeg", width = 14, height = 14)
-
-ggplot(data = dhs_dist_sum_shp) +
-  geom_sf(aes(fill = chborn)) +
-  scale_fill_viridis_c(direction = -1, name = "Avg. number of children ever born") +
-  theme_minimal() +
-  theme(
-    panel.grid.major = element_blank(),
-    axis.text = element_blank(),
-    axis.ticks = element_blank(),
-    axis.title = element_blank(),
-    legend.title = element_text(size = 20),
-    legend.text = element_text(size = 15)
-  )
-ggsave("Figures/chborn.jpeg", width = 14, height = 14)
-
-ggplot(data = dhs_dist_2024_sum_shp) +
-  geom_sf(aes(fill = chborn)) +
-  scale_fill_viridis_c(direction = -1, name = "Avg. number of children ever born \namong women aged 20-24") +
-  theme_minimal() +
-  theme(
-    panel.grid.major = element_blank(),
-    axis.text = element_blank(),
-    axis.ticks = element_blank(),
-    axis.title = element_blank(),
-    legend.title = element_text(size = 20),
-    legend.text = element_text(size = 15)
-  )
-ggsave("Figures/chborn_2024.jpeg", width = 14, height = 14)
-
-ggplot(data = dhs_dist_sum_shp) +
-  geom_sf(aes(fill = yrschool)) +
-  scale_fill_viridis_c(direction = -1, name = "Avg. years of school completed") +
-  theme_minimal() +
-  theme(
-    panel.grid.major = element_blank(),
-    axis.text = element_blank(),
-    axis.ticks = element_blank(),
-    axis.title = element_blank(),
-    legend.title = element_text(size = 20),
-    legend.text = element_text(size = 15)
-  )
-ggsave("Figures/yrschool.jpeg", width = 14, height = 14)
-
-ggplot(data = dhs_dist_2024_sum_shp) +
-  geom_sf(aes(fill = yrschool)) +
-  scale_fill_viridis_c(direction = -1, name = "Avg. years of school completed \namong women aged 20-24") +
-  theme_minimal() +
-  theme(
-    panel.grid.major = element_blank(),
-    axis.text = element_blank(),
-    axis.ticks = element_blank(),
-    axis.title = element_blank(),
-    legend.title = element_text(size = 20),
-    legend.text = element_text(size = 15)
-  )
-ggsave("Figures/yrschool_2024.jpeg", width = 14, height = 14)
+ggsave("Figures/agemarr_change.jpeg", width = 14, height = 14)
